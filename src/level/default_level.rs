@@ -1,4 +1,4 @@
-use bevy::{app::{Plugin, Startup}, asset::AssetServer, math::Vec3, prelude::{Commands, Res, Transform}};
+use bevy::{app::{Plugin, Startup}, asset::AssetServer, color::Color, math::Vec3, pbr::AmbientLight, prelude::{Commands, Res, Transform}};
 
 use crate::util::load_scene;
 
@@ -8,6 +8,11 @@ fn create_default_level_system(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
 ) {
+    commands.insert_resource(AmbientLight {
+        color: Color::srgb_u8(84, 65, 85),
+        brightness: 2000.0,
+    });
+
     const METEOR_MODEL_PATH: &str = "kenney_space-kit/Models/GLTF format/meteor_detailed.glb#Scene0";
     let meteor_model = load_scene(&asset_server, METEOR_MODEL_PATH);
     
