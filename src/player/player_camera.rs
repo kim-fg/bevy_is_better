@@ -10,10 +10,10 @@ impl PlayerCameraBundle {
         Self {
             camera: Camera3dBundle {
                 projection: bevy::prelude::Projection::Perspective(PerspectiveProjection {
-                    fov: 120.0,
+                    fov: 90.0,
                     ..default()
                 }),
-                transform: Transform::from_xyz(0.0, 10.0, 5.0)
+                transform: Transform::from_xyz(0.0, 15.0, 7.5)
                     .with_rotation(Quat::from_rotation_x(f32::to_radians(-60.0))),
                 ..default()
             },
