@@ -49,7 +49,6 @@ fn create_player_system(
     asset_server: Res<AssetServer>,
 ) {
     let scene_bundle = util::load_scene(&asset_server, PlayerBundle::MODEL_PATH);
-
     commands.spawn(PlayerBundle::new(0, scene_bundle));
 }
 

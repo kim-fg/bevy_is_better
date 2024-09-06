@@ -1,11 +1,10 @@
-use bevy::{app::{Plugin, PostUpdate, Startup, Update}, asset::{AssetServer, Assets, Handle, LoadState}, core_pipeline::Skybox, math::Quat, prelude::{BuildChildren, Bundle, Camera3dBundle, Commands, Component, Image, IntoSystemConfigs, PerspectiveProjection, Query, Res, ResMut, Resource, Transform, TransformBundle, Without}, render::render_resource::{TextureViewDescriptor, TextureViewDimension}, utils::default};
+use bevy::{asset::LoadState, core_pipeline::Skybox, prelude::*, render::render_resource::{TextureViewDescriptor, TextureViewDimension}};
 
 use super::PlayerTag;
 
 #[derive(Resource)]
 struct Cubemap {
     is_loaded: bool,
-    index: usize,
     image_handle: Handle<Image>,
 }
 
@@ -55,7 +54,6 @@ fn create_player_camera_system(
 
     commands.insert_resource(Cubemap {
         is_loaded: false,
-        index: 0,
         image_handle: skybox_handle,
     })
 }
