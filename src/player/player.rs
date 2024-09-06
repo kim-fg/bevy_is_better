@@ -61,6 +61,9 @@ fn player_move_system(
 
     for (input, movement, mut transform) in &mut query {
         let thrust = if input.thrust { movement.thrust_power } else { 0.0 }; // todo! add velocity based movement
+        let turn = input.turn * movement.turn_speed;
+        transform.rotate_y(f32::to_radians(-turn) * delta);
+        
         let forward = transform.forward();
 
         transform.translation += forward * thrust * delta;
