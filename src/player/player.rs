@@ -1,9 +1,11 @@
 use bevy::{app::{Plugin, Startup, Update}, asset::AssetServer, prelude::{default, Bundle, Commands, Component, Query, Res, Transform}, scene::SceneBundle, time::Time};
 
+use crate::util;
+
 use super::PlayerInput;
 
 #[derive(Component, Default)]
-pub struct PlayerTag;
+pub struct PlayerTag { pub id: u32 }
 
 #[derive(Component)]
 pub struct PlayerMovement {
@@ -31,8 +33,11 @@ pub struct PlayerBundle {
 }
 
 impl PlayerBundle {
-    pub fn new(model: SceneBundle) -> Self {
+    pub const MODEL_PATH: &str = "kenney_space-kit/Models/GLTF format/craft_racer.glb#Scene0";
+
+    pub fn new(id: u32, model: SceneBundle) -> Self {
         Self {
+            tag: PlayerTag { id },
             model,
             ..default()
         }
@@ -43,15 +48,9 @@ fn create_player_system(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
 ) {
-    const MODEL_PATH: &str = "kenney_space-kit/Models/GLTF format/craft_racer.glb#Scene0";
+    let scene_bundle = util::load_scene(&asset_server, PlayerBundle::MODEL_PATH);
 
-    let scene_handle = asset_server.load(MODEL_PATH);
-    let scene_bundle = SceneBundle {
-        scene: scene_handle,
-        ..default()
-    };
-
-    commands.spawn(PlayerBundle::new(scene_bundle));
+    commands.spawn(PlayerBundle::new(0, scene_bundle));
 }
 
 fn player_move_system(
